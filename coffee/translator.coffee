@@ -22,8 +22,7 @@ do (moduleName = "amo.module.translator") ->
 
     registerTranslator: (name) ->
       $filterProvider.register name, ["#{moduleName}.translatorCollection", (tc) ->
-        translator = tc.getTranslator name
-        return -> translator.apply undefined, arguments
+        return tc.getTranslator name
       ]
     $get: ["$filter", ($filter) ->
       getTranslator: (name) ->
