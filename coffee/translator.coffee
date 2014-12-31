@@ -1,6 +1,6 @@
 "use strict"
 
-do (moduleName = "amo.module.Translator") ->
+do (moduleName = "amo.module.translator") ->
   Translator = ($filter, name, rule = {}) ->
     self = (key, context = {}) ->
       result = rule[key] or key
