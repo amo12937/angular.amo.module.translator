@@ -10,6 +10,10 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "coffee",
+    "Gruntfile.coffee",
+    "package.json",
+    "karma.conf.coffee",
     "test",
     "tests"
   ],
