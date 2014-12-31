@@ -58,4 +58,50 @@ do (moduleName = "amo.module.translator") ->
 
       it "これ自身関数である", ->
         expect(translator instanceof Function).toBe true
+      it "getName で name を取得できる", ->
+        expect(translator.getName()).toBe name
+      describe "setRule によってルールをセットすることができ、", ->
+        rule =
+          "Hello World": "こんにちワールド"
+          "Hello %user%": "こんにちは、%user%"
+          "switch %hoge% and %fuga%": "%fuga% と %hoge% が入れ替わっている"
+          "%word% is same as %word%": "%word% と %word% は同じ値"
+          "can use %filter%": "%filter% を使うことができる"
+        another =
+          rule:
+            "Hello World": "[another] こんにちワールド"
+            "Hello %user%": "[another] こんにちは、%user%"
+            "switch %hoge% and %fuga%": "[another] %fuga% と %hoge% が入れ替わっている"
+            "%word% is same as %word%": "[another] %word% と %word% は同じ値"
+            "can use %filter%": "[another] %filter% を使うことができる"
+         beforeEach ->
+           translator.setRule rule
+         it "固定文言を翻訳してくれる", ->
+           expect(translator "Hello World").toBe "こんにちワールド"
+         it "変数を代入することができる", ->
+           context =
+             user: "name"
+           expect(translator "Hello %user%", context).toBe "こんにちは、name"
+         it "変数の順番は自由に変えることができる", ->
+           context =
+             hoge: "A"
+             fuga: "B"
+           expect(translator "switch %hoge% and %fuga%", context).toBe "B と A が入れ替わっている"
+         it "同じ値を 2 回以上使うことができる", ->
+           context =
+             word: "hoge"
+           expect(translator "%word% is same as %word%", context).toBe "hoge と hoge は同じ値"
+         it "フィルターを適用してくれる", ->
+           context =
+             filter: [100, ["currency", "hoge"], "uppercase"]
+           expect(translator "can use %filter%", context).toBe "HOGE100.00 を使うことができる"
+         it "ルールに無い場合はそのまま返される", ->
+           expect(translator "this key is not in the rule").toBe "this key is not in the rule"
+         it "ルールに無いキーにも変数を入れることができる", ->
+           context =
+             param: "hoge"
+           expect(translator "this key with %param% is not in the rule", context).toBe "this key with hoge is not in the rule"
+         it "別ルールに書き換えることができる", ->
+           translator.setRule another.rule
+           expect(translator "Hello World").toBe "[another] こんにちワールド"
 
