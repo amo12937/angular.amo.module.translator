@@ -15,7 +15,7 @@ bower install -S angular.amo.module.translator
 翻訳フィルターは config の段階で登録しておく必要がある。
 
 ## フィルターの登録
-```
+```coffee
 angular.module "yourApp", ["amo.module.translator"]
 .config ["amo.module.translator.translatorCollectionProvider", (provider) ->
   provider.registerTranslator "trans"
@@ -26,7 +26,7 @@ angular.module "yourApp", ["amo.module.translator"]
 ## 翻訳情報の登録
 フィルターを使用する前に、翻訳情報を登録する必要がある。
 
-```
+```coffee
 angular.module "yourApp"
 .run ["amo.module.translator.translatorCollection", (tc) ->
   transRule =
@@ -49,7 +49,7 @@ angular.module "yourApp"
 ## フィルターの使用
 フィルターは以下のようにしてテンプレート上で使用できる。
 
-```
+```haml
 .menu
   .button {{ "Home"|icon }}
   .button {{ "Profile"|icon }}
@@ -63,7 +63,7 @@ angular.module "yourApp"
 getTranslator で取得した translator はそれ自身が関数となっており、
 フィルターと同じように使うことが出来る。
 
-```
+```coffee
 angular.module "yourApp"
 .controller "someController", ["amo.module.translator.translatorCollection", (tc) ->
   translator = tc.getTranslator "trans"
