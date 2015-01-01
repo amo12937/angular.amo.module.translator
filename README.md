@@ -7,6 +7,10 @@
 bower install -S angular.amo.module.translator
 ```
 
+```haml:index.haml
+%script(src="bower_components/angular.amo.module.translator/dist/js/translator.min.js")
+```
+
 # 使い方
 
 ## translatorCollectionProvider
