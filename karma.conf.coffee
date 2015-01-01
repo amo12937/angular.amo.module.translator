@@ -6,7 +6,7 @@ module.exports = (config) ->
     files: [
       "bower_components/angular/angular.js"
       "bower_components/angular-mocks/angular-mocks.js"
-      "coffee/**/*.coffee"
+      "src/**/*.coffee"
       "test/**/*.coffee"
     ]
     frameworks: ["jasmine"]
@@ -15,7 +15,7 @@ module.exports = (config) ->
     autoWatch: false
     browsers: ["PhantomJS"]
     preprocessors: {
-      "coffee/**/*.coffee": "coffee"
+      "src/**/*.coffee": "coffee"
       "test/**/*.coffee": "coffee"
     },
     reporters: ["spec"]

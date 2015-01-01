@@ -6,16 +6,20 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     pkg: grunt.file.readJSON "bower.json"
+    context:
+      dir:
+        src: "src/scripts"
+        dist: "dist/js"
     clean:
-      dist: "src"
+      dist: "<%= context.dir.dist %>"
     coffee:
       dist:
         files: [
           {
             expand: true
-            cwd: "coffee"
+            cwd: "<%= context.dir.src %>"
             src: "**/*.coffee"
-            dest: "src"
+            dest: "<%= context.dir.dist %>"
             ext: ".js"
           }
         ]
@@ -23,8 +27,8 @@ module.exports = (grunt) ->
       options:
         banner: "/*! <%= pkg.name %> <%= pkg.version %> | Copyright (c) <%= grunt.template.today('yyyy') %> Author: <%= pkg.authors %> | License: <%= pkg.license %> */"
       build:
-        src: "src/translator.js"
-        dest: "src/translator.min.js"
+        src: "<%= context.dir.dist %>/translator.js"
+        dest: "<%= context.dir.dist %>/translator.min.js"
     karma:
       unit:
         configFile: "karma.conf.coffee"
